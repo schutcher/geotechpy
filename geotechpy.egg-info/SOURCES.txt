@@ -2,6 +2,7 @@ LICENSE.txt
 README.md
 setup.py
 geotechpy/__init__.py
+geotechpy/particle_size.py
 geotechpy.egg-info/PKG-INFO
 geotechpy.egg-info/SOURCES.txt
 geotechpy.egg-info/dependency_links.txt

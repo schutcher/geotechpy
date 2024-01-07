@@ -1,0 +1,5 @@
+layer_id,top_elevation,bottom_elevation,soil_classification,moist_unit_weight,saturated_unit_weight,drained_friction_angle,drained_cohesion,undrained_friction_angle,undrained_cohesion
+1,30,10,Medium Dense Alluvium,120,125,30,0,,
+2,10,0,Dense Alluvium,115,120,27,0,,
+3,0,-5,test,130,135,38,0,,
+4,-5,-15,test,125,130,35,0,,
