@@ -2,8 +2,11 @@ LICENSE.txt
 README.md
 setup.py
 geotechpy/__init__.py
-geotechpy/particle_size.py
+geotechpy/coulomb_earth_pressure.py
+geotechpy/soil_profile.py
 geotechpy.egg-info/PKG-INFO
 geotechpy.egg-info/SOURCES.txt
 geotechpy.egg-info/dependency_links.txt
 geotechpy.egg-info/top_level.txt
+tests/__init__.py
+tests/test_calculations.py

@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-VERSION = "0.0.1"
+VERSION = "0.0.2"
 DESCRIPTION = "Python library for geotechnical calculations"
 LONG_DESCRIPTION = "Python library for performing geotechnical engineering calculations"
 

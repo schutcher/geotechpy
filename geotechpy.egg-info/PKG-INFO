@@ -1,10 +1,13 @@
 Metadata-Version: 2.1
 Name: geotechpy
-Version: 0.0.1
+Version: 0.0.2
 Summary: Python library for geotechnical calculations
+Home-page: UNKNOWN
 Author: Shawn Hutcherson, P.E.
 Author-email: <hutcherson.shawn@gmail.com>
+License: UNKNOWN
 Keywords: python,geotechpy,geotechnical,geotech
+Platform: UNKNOWN
 Classifier: Development Status :: 1 - Planning
 Classifier: Intended Audience :: Education
 Classifier: Intended Audience :: End Users/Desktop
@@ -17,3 +20,4 @@ Classifier: Natural Language :: English
 License-File: LICENSE.txt
 
 Python library for performing geotechnical engineering calculations
+
