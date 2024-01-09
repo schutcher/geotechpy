@@ -3,7 +3,7 @@ import pandas as pd
 from matplotlib.patches import Polygon
 import matplotlib.pyplot as plt
 
-from soil_profile import SoilProfile
+from geotechpy.soil_profile import SoilProfile
 
 
 class CoulombEarthPressure:
