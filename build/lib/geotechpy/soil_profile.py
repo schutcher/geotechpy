@@ -1,6 +1,8 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
+from geotechpy.split_layer import split_layer_at_elevation
+
 
 class SoilProfile:
     def __init__(self, dataframe, surcharge_load, water_surface_elev):
@@ -49,46 +51,10 @@ class SoilProfile:
         :param water_surface_elev: Elevation at which the layer should be split.
         :return: DataFrame with the updated soil profile.
         """
-        # Check if the water level is within the range of the profile
-        if (
-            self._water_surface_elev > self._dataframe["top_elevation"].max()
-            or self._water_surface_elev < self._dataframe["bottom_elevation"].min()
-        ):
-            # print("Water level is outside the soil profile range.")
-            return self._dataframe
-
-        # Find the layer that contains the water level
-        layer_to_split = self._dataframe[
-            (self._dataframe["top_elevation"] > self._water_surface_elev)
-            & (self._dataframe["bottom_elevation"] < self._water_surface_elev)
-        ]
-
-        # If no layer is found, the water level is exactly at a layer boundary
-        if layer_to_split.empty:
-            # print("Water level is exactly at a layer boundary.")
-            return self._dataframe
-
-        # Create two new layers from the original layer
-        top_layer = layer_to_split.copy()
-        bottom_layer = layer_to_split.copy()
-
-        top_layer["bottom_elevation"] = self._water_surface_elev
-        bottom_layer["top_elevation"] = self._water_surface_elev
-
-        # Update layer IDs
-        original_id = layer_to_split.iloc[0]["layer_id"]
-        top_layer["layer_id"] = f"{original_id}a"
-        bottom_layer["layer_id"] = f"{original_id}b"
-
-        # Remove the original layer and add the new layers
-        self._dataframe = self._dataframe[self._dataframe["layer_id"] != original_id]
-        self._dataframe = pd.concat(
-            [self._dataframe, top_layer, bottom_layer], ignore_index=True
+        # Use the split_layer_at_elevation function to split the layer at the water surface elevation
+        self._dataframe = split_layer_at_elevation(
+            self._dataframe, self._water_surface_elev
         )
-
-        # Sort by top elevation to maintain order
-        self._dataframe.sort_values(by="top_elevation", ascending=False, inplace=True)
-        self._dataframe.reset_index(drop=True, inplace=True)
 
         return self._dataframe
 

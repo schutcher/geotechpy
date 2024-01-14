@@ -1,6 +1,9 @@
 from setuptools import setup, find_packages
 
-VERSION = "0.0.2"
+with open("README.md", "r", encoding="utf-8") as fh:
+    long_description = fh.read()
+
+VERSION = "0.0.3"
 DESCRIPTION = "Python library for geotechnical calculations"
 LONG_DESCRIPTION = "Python library for performing geotechnical engineering calculations"
 
@@ -9,12 +12,11 @@ setup(
     name="geotechpy",
     version=VERSION,
     author="Shawn Hutcherson, P.E.",
-    author_email="<hutcherson.shawn@gmail.com>",
+    author_email="hutcherson.shawn@gmail.com",
     description=DESCRIPTION,
     long_description=LONG_DESCRIPTION,
-    readme="README.md",
     packages=find_packages(),
-    install_requires=[],
+    install_requires=["matplotlib>=3.8.2", "numpy>=1.26.2", "pandas>=2.1.4"],
     keywords=["python", "geotechpy", "geotechnical", "geotech"],
     classifiers=[
         "Development Status :: 1 - Planning",
