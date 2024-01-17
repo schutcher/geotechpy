@@ -1,15 +1,27 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
+from geotechpy.constants import get_constants
 from geotechpy.split_layer import split_layer_at_elevation
 
 
 class SoilProfile:
-    def __init__(self, dataframe, surcharge_load, water_surface_elev):
+    def __init__(self, dataframe, surcharge_load, water_surface_elev, units):
         # Initialize SoilProfile with a dataframe, surcharge load, and water surface elevation
-        self._dataframe = dataframe
-        self._surcharge_load = surcharge_load
-        self._water_surface_elev = water_surface_elev
+        self.dataframe = dataframe
+        self.surcharge_load = surcharge_load
+        self.water_surface_elev = water_surface_elev
+        self.units = units
+
+        # Retrieve the appropriate set of constants based on the specified units
+        constants = get_constants(self.units)
+        if constants is None:
+            raise ValueError(f"Invalid units specified: {self.units}. Must be 'metric' or 'imperial'")
+
+        # Assign the constants
+        self.water_unit_weight = constants["water_unit_weight"]
+        self.length_units = constants["length_units"]
+        self.pressure_units = constants["pressure_units"]
 
     @property
     def dataframe(self):
@@ -86,7 +98,7 @@ class SoilProfile:
 
         # Calculate effective unit weight
         self._dataframe["effective_unit_weight"] = (
-            self._dataframe["saturated_unit_weight"] - 62.4
+            self._dataframe["saturated_unit_weight"] - self.water_unit_weight
         )
         self._dataframe.loc[
             self._dataframe["top_elevation"] > self._water_surface_elev,
@@ -261,10 +273,10 @@ class SoilProfile:
             del self._dataframe["bottom_water_pressure"]
 
         # Calculate the hydrostatic water pressure at the top and bottom of each layer
-        water_unit_weight = 62.4  # pcf
+
         self._dataframe["top_water_pressure"] = round(
             (self._water_surface_elev - self._dataframe["top_elevation"])
-            * water_unit_weight,
+            * self.water_unit_weight,
             2,
         )
         self._dataframe.loc[
@@ -272,7 +284,7 @@ class SoilProfile:
         ] = 0
         self._dataframe["bottom_water_pressure"] = round(
             (self._water_surface_elev - self._dataframe["bottom_elevation"])
-            * water_unit_weight,
+            * self.water_unit_weight,
             2,
         )
         self._dataframe.loc[
@@ -442,9 +454,9 @@ class SoilProfile:
                 color=styles[measurement]["color"],
                 linestyle=styles[measurement]["linestyle"],
             )
-        plt.xlabel("Value")
-        plt.ylabel("Elevation")
-        plt.title("Value vs Elevation")
+        plt.xlabel(f"Stress ({self.pressure_units})")
+        plt.ylabel(f"Elevation ({self.length_units})")
+        plt.title("Vertical Stress Profile")
         plt.legend()
         plt.grid(True)
         plt.show()
